@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ContactList</string>
+    <string name="family">Family</string>
+    <string name="friends">Friends</string>
+    <string name="colleagues">Colleagues</string>
+    <string name="tutors">Tutors</string>
+    <string name="zuri_training">Zuri Training</string>
+    <string name="add_new_contact">Add New Contact</string>
+    <string name="name">Name</string>
+    <string name="number">Number</string>
+    <string name="add">ADD</string>
+
+</resources>
