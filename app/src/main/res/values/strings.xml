@@ -9,5 +9,12 @@
     <string name="name">Name</string>
     <string name="number">Number</string>
     <string name="add">ADD</string>
-
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="password_error_message">Incorrect email or password</string>
+    <string name="register">Register</string>
+    <string name="new_user">New user click here to register</string>
+    <string name="existing_user">Already registered, click here to log in</string>
+    <string name="database_name">user-db</string>
 </resources>
