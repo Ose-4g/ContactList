@@ -10,8 +10,8 @@ import androidx.room.Query
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addUser(user:User)
+    suspend fun addUser(user:User):Long
 
-    @Query("SELECT * from users WHERE emailAddress = (:email)  LIMIT 1")
+    @Query("SELECT * from users WHERE emailAddress = (:email) LIMIT 1")
     fun findUser(email:String):LiveData<User>
 }

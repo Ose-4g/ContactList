@@ -1,5 +1,6 @@
 package com.ose4g.contactlist
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,8 +19,9 @@ class ContactViewModel(val db: UserDatabase) : ViewModel()
 
     fun addUser(user: User)
     {
-        viewModelScope.launch(Dispatchers.IO) {
-            db.userDao().addUser(user)
+        viewModelScope.launch{
+            val id = db.userDao().addUser(user)
+            Log.i("wrong","id = ${id.toString()}")
         }
     }
 }

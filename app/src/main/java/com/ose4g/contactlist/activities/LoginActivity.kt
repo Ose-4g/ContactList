@@ -82,7 +82,8 @@ class LoginActivity : AppCompatActivity() {
 
     fun initializeValues()
     {
-        val  db = UserDatabaseInstance.getInstance(applicationContext)
+        val  db = Room.databaseBuilder(applicationContext,
+        UserDatabase::class.java, getString(R.string.database_name)).build()
 
         viewModelFactory = ContactViewModelFactory(db)
         viewModel = ViewModelProvider(this, viewModelFactory)
@@ -100,26 +101,27 @@ class LoginActivity : AppCompatActivity() {
 
         if(isLogin.value!!)
         {
-            var user:User? = null
             try
             {
-                user = viewModel.getUser(emailInput).value
+                viewModel.getUser(emailInput).observe(this, Observer {
+                    val condition1 = binding.emailEditText.text.toString().equals(it?.emailAddress)
+                    val condition2 = binding.passwordEditText.text.toString().equals(it?.password)
 
-                val condition1 = binding.emailEditText.text.toString().equals(user?.emailAddress)
-                val condition2 = binding.passwordEditText.text.toString().equals(user?.password)
+                    //logs in if both condtions are met
+                    if(condition1 && condition2) {
+                        startActivity(Intent(this@LoginActivity, CategoryListActivity::class.java))
+                        finish()
+                    }
+                    //shows error message otherwise
+                    else
+                    {
+                        binding.emailInputLayout.error =""
+                        binding.passwordInputLayout2.error = getString(R.string.password_error_message)
+                        Log.i("wrong","email = ${it?.emailAddress}, password = ${it?.password}")
+                    }
+                })
 
-                //logs in if both condtions are met
-                if(condition1 && condition2) {
-                    startActivity(Intent(this@LoginActivity, CategoryListActivity::class.java))
-                    finish()
-                }
-                //shows error message otherwise
-                else
-                {
-                    binding.emailInputLayout.error =""
-                    binding.passwordInputLayout2.error = getString(R.string.password_error_message)
-                    Log.i("wrong","email = ${user?.emailAddress}, password = ${user?.password}")
-                }
+
             }
             catch(e:Error)
             {
@@ -128,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
         }
         else
         {
-                val ans  = viewModel.addUser(User(emailInput,passwordInput))
+                viewModel.addUser(User(emailInput,passwordInput))
 
         }
 
